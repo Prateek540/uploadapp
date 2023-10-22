@@ -4,10 +4,15 @@ import axios from "axios";
 
 function App() {
   const [username, setUsername] = useState("");
-  const [file, setFile] = useState(null);
+  const [file1, setFile1] = useState(null);
+  const [file2, setFile2] = useState(null);
 
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+  const handleFileChange1 = (e) => {
+    setFile1(e.target.files[0]);
+  };
+
+  const handleFileChange2 = (e) => {
+    setFile2(e.target.files[0]);
   };
 
   const handleusernameChange = (e) => {
@@ -24,15 +29,18 @@ function App() {
   const handleUpload = (e) => {
     e.preventDefault();
 
-    if (!isValidFile(file)) {
+    if (!isValidFile(file1) && !isValidFile(file2)) {
       alert("Invalid file try again");
       return;
     }
 
-    const data = { username, file };
+    const formData = new FormData();
+    formData.append("username", username);
+    formData.append("file1", file1);
+    formData.append("file2", file2);
 
     axios
-      .post("upload", data, {
+      .post("/upload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -52,8 +60,10 @@ function App() {
         <input type="text" onChange={handleusernameChange} />
         <br />
         <br />
-        <label htmlFor="file">File </label>
-        <input type="file" onChange={handleFileChange} />
+        <label htmlFor="file">File 1</label>
+        <input type="file" name="file1" onChange={handleFileChange1} />
+        <label htmlFor="file">File 2</label>
+        <input type="file" name="file2" onChange={handleFileChange2} />
         <button onClick={handleUpload}>Submit</button>
       </form>
     </>
