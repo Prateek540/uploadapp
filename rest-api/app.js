@@ -75,7 +75,7 @@ app.post(
     const file2 = req.files["file2"][0];
     const username = req.body.username;
 
-    if (!file1 && !file2) {
+    if (!file1 || !file2) {
       return res.status(400).json({ error: "No file uploaded" });
     }
 

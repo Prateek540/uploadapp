@@ -29,6 +29,15 @@ function App() {
   const handleUpload = (e) => {
     e.preventDefault();
 
+    if (!username) {
+      alert("Username is empty");
+    }
+
+    if (!file1 || !file2) {
+      alert("Please upload files");
+      return;
+    }
+
     if (!isValidFile(file1) && !isValidFile(file2)) {
       alert("Invalid file try again");
       return;
@@ -60,11 +69,39 @@ function App() {
         <input type="text" onChange={handleusernameChange} />
         <br />
         <br />
-        <label htmlFor="file">File 1</label>
-        <input type="file" name="file1" onChange={handleFileChange1} />
-        <label htmlFor="file">File 2</label>
-        <input type="file" name="file2" onChange={handleFileChange2} />
-        <button onClick={handleUpload}>Submit</button>
+        <div className="file-upload-container">
+          <input
+            type="file"
+            id="fileInput1"
+            name="file1"
+            accept=".jpg,.jpeg,.png"
+            style={{ display: "none" }}
+            onChange={handleFileChange1}
+          />
+          <label htmlFor="fileInput1" className="file-upload-button">
+            Choose File 1
+          </label>
+        </div>
+        <br />
+        <br />
+        <div className="file-upload-container">
+          <input
+            type="file"
+            id="fileInput2"
+            name="file2"
+            accept=".jpg,.jpeg,.png"
+            style={{ display: "none" }}
+            onChange={handleFileChange2}
+          />
+          <label htmlFor="fileInput2" className="file-upload-button">
+            Choose File 2
+          </label>
+        </div>
+        <br />
+        <br />
+        <button className="submitButton" onClick={handleUpload}>
+          Submit
+        </button>
       </form>
     </>
   );
